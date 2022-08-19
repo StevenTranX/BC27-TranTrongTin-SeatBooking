@@ -474,9 +474,13 @@ const moviesSlice = createSlice({
       state.cart = newCart;
       DRY_findIndex(tickets, payload).selected = false;
     },
+    resetInitState: (state = initialState) => {
+      return initialState;
+    },
   },
 });
 
-export const { toggleSeat, addToCart, removeSeat } = moviesSlice.actions;
+export const { toggleSeat, addToCart, removeSeat, resetInitState } =
+  moviesSlice.actions;
 
 export default moviesSlice.reducer;

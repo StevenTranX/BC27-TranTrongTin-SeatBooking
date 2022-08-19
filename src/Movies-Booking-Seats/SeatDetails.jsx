@@ -1,10 +1,17 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+// import React
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+// import Redux
+import { useSelector, useDispatch } from 'react-redux';
 import { removeSeat } from './Redux/movieSlice';
+
+// import Component
+import SeatCheckOut from './SeatCheckOut';
+// =============================================================================
 const ProductDetails = () => {
-  const { cart } = useSelector((state) => state.movies);
   const dispatch = useDispatch();
+  const { cart } = useSelector((state) => state.movies);
+  const [isCheckedOut, setIsCheckedOut] = useState(false);
   const handleRemove = (item) => {
     dispatch(removeSeat(item));
     // console.log(seatName);
@@ -13,6 +20,13 @@ const ProductDetails = () => {
   if (!cart) {
     return null;
   }
+
+  const openCheckOut = () => {
+    setIsCheckedOut(true);
+  };
+  const closeCheckOut = () => {
+    setIsCheckedOut(false);
+  };
   return (
     <div className="row w-50">
       <div className="col">
@@ -46,16 +60,33 @@ const ProductDetails = () => {
           </tbody>
         </table>
         {/* CHECK OUT SECTION ======================================== */}
-        <div className="text-wrapper">
-          <p className="text">
-            Selected Seats <span id="count">{cart.length}</span>
-          </p>
+        <div className="text-wrapper d-flex">
+          <div>
+            <p className="text">
+              Selected Seats <span id="count">{cart.length}</span>
+            </p>
 
-          <p className="text">
-            Total Price <span id="total">{totalPrice}</span>
-          </p>
+            <p className="text">
+              Total Price <span id="total">{totalPrice}</span>
+            </p>
+          </div>
+          <div>
+            <button
+              className="btn btn-success mt-3 ms-5"
+              onClick={openCheckOut}
+            >
+              Check Out !!!
+            </button>
+            {isCheckedOut && (
+              <SeatCheckOut
+                closeCheckOut={closeCheckOut}
+                isCheckedOut={isCheckedOut}
+                totalPrice={totalPrice}
+                seatQuantity={cart.length}
+              />
+            )}
+          </div>
         </div>
-        {/* CHECK OUT SECTION ======================================== */}
       </div>
     </div>
   );
