@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
+// data ===========================================================
 const initialState = {
   tickets: [
     {
@@ -430,21 +430,27 @@ const initialState = {
   selectedSeat: null,
   cart: [],
 };
+// REUSABLE CODE ===========================================================
+const DRY_findIndex = (state, payload) => {
+  const rowIndex = state.findIndex((item) => item.row === payload.row);
+  const seatIndex = state[rowIndex].seats.findIndex(
+    (item) => item.name === payload.seat.name
+  );
+  return state[rowIndex].seats[seatIndex];
+};
 
 // console.log(initialState.tickets[2].seats[2]);
 const moviesSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
+    // toggleSeat Reducer ===========================================================
     toggleSeat: (state = initialState, action) => {
       const { tickets } = state;
       const { payload } = action;
-      const rowIndex = tickets.findIndex((item) => item.row === payload.row);
-      const seatIndex = tickets[rowIndex].seats.findIndex(
-        (item) => item.name === payload.seat.name
-      );
-      tickets[rowIndex].seats[seatIndex].selected = payload.seat.selected;
+      DRY_findIndex(tickets, payload).selected = payload.seat.selected;
     },
+    // addToCart Reducer ===========================================================
     addToCart: (state = initialState, action) => {
       const { cart } = state;
       const { payload } = action;
@@ -457,19 +463,16 @@ const moviesSlice = createSlice({
       } else return;
       console.log(cart);
     },
+    // removeSeat Reducer ===========================================================
     removeSeat: (state = initialState, action) => {
       let { cart } = state;
       const { tickets } = state;
       const { payload } = action;
-      const newCart = cart.filter(
-        (item) => item.seat.name !== payload.seat.name
-      );
-      cart = newCart;
-      const rowIndex = tickets.findIndex((item) => item.row === payload.row);
-      const seatIndex = tickets[rowIndex].seats.findIndex(
-        (item) => item.name === payload.seat.name
-      );
-      tickets[rowIndex].seats[seatIndex].selected = false;
+      const newCart = cart.filter((item) => {
+        return item.seat.name !== action.payload.seat.name;
+      });
+      state.cart = newCart;
+      DRY_findIndex(tickets, payload).selected = false;
     },
   },
 });

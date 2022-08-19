@@ -3,17 +3,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { removeSeat } from './Redux/movieSlice';
 const ProductDetails = () => {
-  const { selectedSeat } = useSelector((state) => state.movies);
   const { cart } = useSelector((state) => state.movies);
   const dispatch = useDispatch();
   const handleRemove = (item) => {
     dispatch(removeSeat(item));
     // console.log(seatName);
   };
+  let totalPrice = 0;
   if (!cart) {
     return null;
   }
-  let totalPrice = 0;
   return (
     <div className="row w-50">
       <div className="col">
@@ -33,8 +32,6 @@ const ProductDetails = () => {
                 <tr key={item.seat.name}>
                   <td>{item.seat.name}</td>
                   <td>{item.seat.price}</td>
-
-                  {/* <td>{item.price * item.quantity}</td> */}
                   <td>
                     <button
                       className="btn btn-danger"
@@ -48,6 +45,7 @@ const ProductDetails = () => {
             })}
           </tbody>
         </table>
+        {/* CHECK OUT SECTION ======================================== */}
         <div className="text-wrapper">
           <p className="text">
             Selected Seats <span id="count">{cart.length}</span>
@@ -57,6 +55,7 @@ const ProductDetails = () => {
             Total Price <span id="total">{totalPrice}</span>
           </p>
         </div>
+        {/* CHECK OUT SECTION ======================================== */}
       </div>
     </div>
   );

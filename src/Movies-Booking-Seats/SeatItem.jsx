@@ -32,7 +32,10 @@ const SeatItem = () => {
                 return (
                   <div
                     key={seat.name}
-                    className="seat"
+                    className={cn({
+                      seat: 'seat',
+                      occupied: seat.occupied === true,
+                    })}
                     style={{ textAlign: 'center' }}
                     onClick={() => handleSelect(ticket, seat)}
                   >
