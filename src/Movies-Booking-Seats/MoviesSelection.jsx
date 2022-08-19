@@ -7,8 +7,8 @@ const MoviesSelection = () => {
       <select id="movie">
         <option value={80}>Parasite (80.000vnd)</option>
         <option value={100}>Joker (100.000vnd)</option>
-        <option value={70}>Jumanji: Next Level (70.000vnd)</option>
-        <option value={70}>Dolittle (₹70.000)</option>
+        <option value={70}>Terminator 2 : Judgement Day (70.000vnd)</option>
+        <option value={70}>Bullet Train (95.000)</option>
       </select>
     </div>
   );

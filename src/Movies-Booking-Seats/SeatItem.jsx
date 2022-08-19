@@ -6,6 +6,7 @@ import { toggleSeat, addToCart } from './Redux/movieSlice';
 import cn from 'classnames';
 const SeatItem = () => {
   const { tickets } = useSelector((state) => state.movies);
+  const { cart } = useSelector((state) => state.movies);
   const dispatch = useDispatch();
   const handleSelect = (ticket, seat) => {
     dispatch(
@@ -13,12 +14,12 @@ const SeatItem = () => {
         row: ticket.row,
         seat: {
           ...seat,
-          selected: !seat.selected,
+          selected: true,
         },
       })
     );
 
-    dispatch(addToCart(seat));
+    dispatch(addToCart({ row: ticket.row, seat: seat }));
   };
 
   return (
@@ -46,7 +47,7 @@ const SeatItem = () => {
                     style={{
                       textAlign: 'center',
                       backgroundColor: '#31d7a9',
-                      color: 'red',
+                      color: '#fff',
                     }}
                     onClick={() => handleSelect(ticket, seat)}
                   >

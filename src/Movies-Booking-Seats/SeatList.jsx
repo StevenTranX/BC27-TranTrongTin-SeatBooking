@@ -28,14 +28,6 @@ const SeatList = () => {
       <div className="row-container">
         <SeatItem />
         <h5 className="subtitle">DIAMOND - ₹850</h5>
-        <div className="text-wrapper">
-          <p className="text">
-            Selected Seats <span id="count">0</span>
-          </p>
-          <p className="text">
-            Total Price ₹<span id="total">0</span>
-          </p>
-        </div>
       </div>
     </div>
   );

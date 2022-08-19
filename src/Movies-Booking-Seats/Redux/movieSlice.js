@@ -430,6 +430,7 @@ const initialState = {
   selectedSeat: null,
   cart: [],
 };
+
 // console.log(initialState.tickets[2].seats[2]);
 const moviesSlice = createSlice({
   name: 'movies',
@@ -445,17 +446,30 @@ const moviesSlice = createSlice({
       tickets[rowIndex].seats[seatIndex].selected = payload.seat.selected;
     },
     addToCart: (state = initialState, action) => {
-      const index = state.cart.findIndex(
-        (item) => item.name === action.payload.name
+      const { cart } = state;
+      const { payload } = action;
+      const index = cart.findIndex(
+        (item) => item.seat.name === payload.seat.name
       );
 
       if (index === -1) {
         state.cart.push(action.payload);
       } else return;
+      console.log(cart);
     },
     removeSeat: (state = initialState, action) => {
-      const newCart = state.cart.filter((seat) => seat.name !== action.payload);
-      state.cart = newCart;
+      let { cart } = state;
+      const { tickets } = state;
+      const { payload } = action;
+      const newCart = cart.filter(
+        (item) => item.seat.name !== payload.seat.name
+      );
+      cart = newCart;
+      const rowIndex = tickets.findIndex((item) => item.row === payload.row);
+      const seatIndex = tickets[rowIndex].seats.findIndex(
+        (item) => item.name === payload.seat.name
+      );
+      tickets[rowIndex].seats[seatIndex].selected = false;
     },
   },
 });

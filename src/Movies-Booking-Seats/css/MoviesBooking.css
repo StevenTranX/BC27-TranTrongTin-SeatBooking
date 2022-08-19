@@ -3,6 +3,7 @@
 
 * {
   box-sizing: border-box;
+  color: #fff;
 }
 
 body {
@@ -38,6 +39,7 @@ body {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  color: #000;
   /* Will remove the browser style and let you use your own style */
 }
 
